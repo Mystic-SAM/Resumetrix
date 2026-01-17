@@ -10,12 +10,14 @@ export const meta = () => ([
 const Auth = () => {
   const { isLoading, auth } = usePuterStore();
   const location = useLocation();
-  const next = location.search.split('next=')[1];
   const navigate = useNavigate();
+  const redirectTo = location.state?.from;
 
   useEffect(() => {
-    if (auth.isAuthenticated) navigate(next);
-  }, [auth.isAuthenticated, next]);
+    if (auth.isAuthenticated && redirectTo) {
+      navigate(redirectTo, { replace: true });
+    }
+  }, [auth.isAuthenticated, redirectTo]);
 
   const navigateHome = () => {
     navigate("/");
@@ -29,13 +31,13 @@ const Auth = () => {
             <h1>Welcome</h1>
             {!isLoading && auth.isAuthenticated ?
               <>
-                <h2>Already logged in.</h2>
-                <h2> Click on Home button to go to home page</h2>
+                <h2>You are already logged in.</h2>
+                <h2> Click on Home button to Continue Your Job Journey</h2>
               </>
               : <h2>Log In to Continue Your Job Journey</h2>
             }
           </div>
-          <div>
+          <div className="flex gap-8 flex-wrap justify-center items-center">
             {isLoading ? (
               <button className="auth-button animate-pulse">
                 <p>Signing you in...</p>
@@ -43,14 +45,14 @@ const Auth = () => {
             ) : (
               <>
                 {auth.isAuthenticated ? (
-                  <div className="flex gap-8 flex-wrap justify-center items-center">
+                  <>
                     <button className="auth-button" onClick={navigateHome}>
                       <p>Home</p>
                     </button>
                     <button className="auth-button" onClick={auth.signOut}>
                       <p>Log Out</p>
                     </button>
-                  </div>
+                  </>
                 ) : (
                   <button className="auth-button" onClick={auth.signIn}>
                     <p>Log In</p>
