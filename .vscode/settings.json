@@ -1,0 +1,13 @@
+{
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit",
+        "source.organizeImports": "explicit"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "css.lint.unknownAtRules": "ignore",
+    "tailwindCSS.lint.recommendedVariantOrder": "ignore",
+    "tailwindCSS.lint.suggestCanonicalClasses": "ignore",
+}
