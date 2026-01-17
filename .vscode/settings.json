@@ -10,4 +10,5 @@
     "css.lint.unknownAtRules": "ignore",
     "tailwindCSS.lint.recommendedVariantOrder": "ignore",
     "tailwindCSS.lint.suggestCanonicalClasses": "ignore",
+    "editor.tabSize": 2,
 }
