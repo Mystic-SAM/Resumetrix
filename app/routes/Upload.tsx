@@ -1,4 +1,4 @@
-import { type FormEvent, useState } from 'react';
+import { type FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import FileUploader from "~/components/FileUploader";
 import Navbar from "~/components/Navbar";
@@ -8,11 +8,20 @@ import { usePuterStore } from '~/lib/puter';
 import { generateUUID } from '~/lib/utils';
 
 const Upload = () => {
-  const { fs, ai, kv } = usePuterStore();
+  const { isLoading, auth, fs, ai, kv } = usePuterStore();
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
   const [statusText, setStatusText] = useState('');
   const [file, setFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    if (!isLoading && !auth.isAuthenticated) {
+      navigate('/auth', {
+        state: { from: location.pathname },
+        replace: true
+      });
+    }
+  }, [isLoading, auth.isAuthenticated]);
 
   const handleFileSelect = (file: File | null) => {
     setFile(file)
@@ -59,8 +68,7 @@ const Upload = () => {
     data.feedback = JSON.parse(feedbackText);
     await kv.set(`resume:${uuid}`, JSON.stringify(data));
     setStatusText('Analysis complete, redirecting...');
-    console.log(data);
-    // navigate(`/resume/${uuid}`);
+    navigate(`/resume/${uuid}`);
   }
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
