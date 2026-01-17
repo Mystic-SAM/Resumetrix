@@ -26,10 +26,14 @@ body {
 
 main {
   @apply min-h-screen pt-10;
+  @apply bg-cover;
 
   &.main-page {
-    @apply bg-cover;
-    background-image: url("/assets/bg-main.svg");
+    background-image: url("/images/bg-main.svg");
+  }
+
+  &.auth-page {
+    background-image: url("/images/bg-auth.svg");
   }
 }
 
@@ -76,5 +80,9 @@ h2 {
 
   .resume-card-header {
     @apply flex flex-row gap-2 justify-between min-h-[110px] max-sm:flex-col items-center max-md:justify-center max-md:items-center;
+  }
+
+  .auth-button {
+    @apply primary-gradient rounded-full py-4 px-8 cursor-pointer w-fit min-w-[180px] max-md:w-full text-3xl font-semibold text-white;
   }
 }
