@@ -83,5 +83,5 @@ export const prepareInstructions = ({ jobTitle, jobDescription }: { jobTitle: st
     The job description is: ${jobDescription}
     Provide the feedback using the following format:
     ${AIResponseFormat}
-    Return the analysis as an JSON object, without any other text and without the backticks.
+    Return the analysis as an JSON object, without any other text and without the backticks so that I can directly parse the response using JSON.parse() function.
     Do not include any other text or comments.`;
