@@ -2,13 +2,15 @@ import { type FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import FileUploader from "~/components/FileUploader";
 import Navbar from "~/components/Navbar";
-import { prepareInstructions } from '~/constants';
+import { defaultFeedback, prepareInstructions } from '~/constants';
+import { usePuterStore } from '~/hooks/usePuterStore';
+import { useResumeStore } from '~/hooks/useResumeStore';
 import { convertPdfToImage } from '~/lib/pdf2image';
-import { usePuterStore } from '~/lib/puter';
 import { generateUUID } from '~/lib/utils';
 
 const Upload = () => {
   const { isLoading, auth, fs, ai, kv } = usePuterStore();
+  const { addResume } = useResumeStore();
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
   const [statusText, setStatusText] = useState('');
@@ -49,7 +51,7 @@ const Upload = () => {
       resumePath: uploadedFile.path,
       imagePath: uploadedImage.path,
       companyName, jobTitle, jobDescription,
-      feedback: '',
+      feedback: defaultFeedback,
     }
     await kv.set(`resume:${uuid}`, JSON.stringify(data));
 
@@ -67,6 +69,7 @@ const Upload = () => {
 
     data.feedback = JSON.parse(feedbackText);
     await kv.set(`resume:${uuid}`, JSON.stringify(data));
+    addResume(data);
     setStatusText('Analysis complete, redirecting...');
     navigate(`/resume/${uuid}`);
   }

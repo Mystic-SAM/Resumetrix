@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { usePuterStore } from "~/lib/puter";
+import { usePuterStore } from "~/hooks/usePuterStore";
 
 export const meta = () => ([
   { title: 'Resumetrix | Auth' },

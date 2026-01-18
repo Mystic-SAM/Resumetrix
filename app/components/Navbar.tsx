@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { usePuterStore } from "~/lib/puter";
+import { usePuterStore } from "~/hooks/usePuterStore";
 
 const Navbar = () => {
   const { auth } = usePuterStore();

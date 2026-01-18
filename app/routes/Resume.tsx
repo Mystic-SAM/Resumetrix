@@ -3,7 +3,8 @@ import { Link, useNavigate, useParams } from "react-router";
 import ATS from "~/components/ATS";
 import Details from "~/components/Details";
 import Summary from "~/components/Summary";
-import { usePuterStore } from "~/lib/puter";
+import { usePuterStore } from "~/hooks/usePuterStore";
+import { useResumeStore } from "~/hooks/useResumeStore";
 
 export const meta = () => ([
   { title: 'Resumetrix | Resume Review ' },
@@ -12,8 +13,9 @@ export const meta = () => ([
 
 const Resume = () => {
   const { auth, isLoading, fs, kv } = usePuterStore();
+  const { imageUrlMap, setImageUrl } = useResumeStore();
   const { id } = useParams();
-  const [imageUrl, setImageUrl] = useState('');
+  const [resumeImgUrl, setResumeImgUrl] = useState('');
   const [resumeUrl, setResumeUrl] = useState('');
   const [feedback, setFeedback] = useState<Feedback | null>(null);
   const navigate = useNavigate();
@@ -41,10 +43,15 @@ const Resume = () => {
     const resumeUrl = URL.createObjectURL(pdfBlob);
     setResumeUrl(resumeUrl);
 
+    if (imageUrlMap[data.imagePath]) {
+      setResumeImgUrl(imageUrlMap[data.imagePath]);
+    } else {
     const imageBlob = await fs.read(data.imagePath);
     if (!imageBlob) return;
-    const imageUrl = URL.createObjectURL(imageBlob);
-    setImageUrl(imageUrl);
+      const resImgUrl = URL.createObjectURL(imageBlob);
+      setResumeImgUrl(resImgUrl);
+      setImageUrl(data.imagePath, resImgUrl);
+    }
 
     setFeedback(data.feedback);
   }
@@ -63,11 +70,11 @@ const Resume = () => {
       </nav>
       <div className="flex flex-row w-full max-lg:flex-col-reverse">
         <section className="feedback-section bg-[url('/images/bg-small.svg') bg-cover h-[100vh] sticky top-0 items-center justify-center">
-          {imageUrl && resumeUrl && (
+          {resumeImgUrl && resumeUrl && (
             <div className="animate-in fade-in duration-1000 gradient-border max-sm:m-0 h-[90%] max-wxl:h-fit w-fit shadow-lg border-1 border-gray-200">
               <a href={resumeUrl} target="_blank" rel="noopener noreferrer">
                 <img
-                  src={imageUrl}
+                  src={resumeImgUrl}
                   className="w-full h-full object-contain rounded-2xl"
                   title="resume"
                 />

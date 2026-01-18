@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import Navbar from "~/components/Navbar";
 import ResumeCard from "~/components/ResumeCard";
-import { usePuterStore } from "~/lib/puter";
+import { usePuterStore } from "~/hooks/usePuterStore";
+import { useResumeStore } from "~/hooks/useResumeStore";
 import type { Route } from "./+types/Home";
 
 export function meta({ }: Route.MetaArgs) {
@@ -19,7 +20,7 @@ const Home = () => {
   const { auth, kv } = usePuterStore();
   const navigate = useNavigate();
   const location = useLocation();
-  const [resumes, setResumes] = useState<Resume[]>([]);
+  const { resumes, setResumes } = useResumeStore();
   const [loadingResumes, setLoadingResumes] = useState(false);
 
   useEffect(() => {
@@ -38,14 +39,16 @@ const Home = () => {
 
     const parsedResumes = resumeList?.map((resume) => (
       JSON.parse(resume.value) as Resume
-    ))
+    ));
 
     setResumes(parsedResumes || []);
     setLoadingResumes(false);
   }
 
   useEffect(() => {
-    loadResumes()
+    if (resumes?.length === 0) {
+      loadResumes();
+    }
   }, []);
 
   return (

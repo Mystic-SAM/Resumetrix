@@ -42,6 +42,35 @@ export const AIResponseFormat = `
     };
 }`;
 
+export const defaultFeedback: Feedback = {
+    overallScore: 0,
+
+    ATS: {
+        score: 0,
+        tips: [],
+    },
+
+    toneAndStyle: {
+        score: 0,
+        tips: [],
+    },
+
+    content: {
+        score: 0,
+        tips: [],
+    },
+
+    structure: {
+        score: 0,
+        tips: [],
+    },
+
+    skills: {
+        score: 0,
+        tips: [],
+    },
+};
+
 export const prepareInstructions = ({ jobTitle, jobDescription }: { jobTitle: string; jobDescription: string; }) =>
     `You are an expert in ATS (Applicant Tracking System) and resume analysis.
     Please analyze and rate this resume and suggest how to improve it.
