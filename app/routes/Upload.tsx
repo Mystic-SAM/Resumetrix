@@ -124,7 +124,7 @@ const Upload = () => {
                 <FileUploader onFileSelect={handleFileSelect} />
               </div>
 
-              <button className="primary-button" type="submit">
+              <button className="primary-button" type="submit" disabled={!file}>
                 Analyze Resume
               </button>
             </form>

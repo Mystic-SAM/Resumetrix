@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '~/lib/utils';
 
 interface Suggestion {
   type: "good" | "improve";
@@ -31,9 +32,9 @@ const ATS: React.FC<ATSProps> = ({ score, suggestions }: ATSProps) => {
   }
 
   return (
-    <div className={`bg-gradient-to-b ${gradientClass} to-white rounded-2xl shadow-md w-full p-6`}>
+    <div className={`bg-gradient-to-b ${gradientClass} to-white rounded-2xl shadow-md w-full p-4`}>
       {/* Top section with icon and headline */}
-      <div className="flex items-center gap-4 mb-6">
+      <div className="flex items-center gap-4 mb-6 max-xs:flex-col">
         <img src={iconSrc} alt="ATS Score Icon" className="w-12 h-12" />
         <div>
           <h2 className="text-2xl font-bold">ATS Score - {score}/100</h2>
@@ -50,7 +51,12 @@ const ATS: React.FC<ATSProps> = ({ score, suggestions }: ATSProps) => {
         {/* Suggestions list */}
         <div className="space-y-3">
           {suggestions.map((suggestion, index) => (
-            <div key={index} className="flex items-start gap-3">
+            <div key={index} className={cn(
+              "flex items-center gap-3 rounded-xl max-xs:flex-col max-xs:border p-2",
+              suggestion.type === "good"
+                ? "max-xs:border-green-200"
+                : "max-xs:border-amber-200"
+            )}>
               <img
                 src={suggestion.type === "good" ? "/icons/check.svg" : "/icons/warning.svg"}
                 alt={suggestion.type === "good" ? "Check" : "Warning"}

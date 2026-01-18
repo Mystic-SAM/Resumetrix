@@ -120,7 +120,7 @@ const ResumeCard = ({ resume }: { resume: Resume }) => {
               <img
                 src={resumeImgUrl}
                 alt="resume"
-                className="w-full h-[350px] max-sm:h-[200px] object-cover object-top"
+                className="w-full h-[350px] max-sm:h-[280px] object-cover object-top"
               />
             </div>
           </div>

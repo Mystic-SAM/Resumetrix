@@ -46,8 +46,8 @@ const Resume = () => {
     if (imageUrlMap[data.imagePath]) {
       setResumeImgUrl(imageUrlMap[data.imagePath]);
     } else {
-    const imageBlob = await fs.read(data.imagePath);
-    if (!imageBlob) return;
+      const imageBlob = await fs.read(data.imagePath);
+      if (!imageBlob) return;
       const resImgUrl = URL.createObjectURL(imageBlob);
       setResumeImgUrl(resImgUrl);
       setImageUrl(data.imagePath, resImgUrl);
@@ -63,10 +63,11 @@ const Resume = () => {
   return (
     <main className="!pt-0">
       <nav className="resume-nav">
-        <Link to="/" className="back-button">
-          <img src="/icons/back.svg" alt="logo" className="w-2.5 h-2.5" />
-          <span className="text-gray-800 text-sm font-semibold">Back to Homepage</span>
+        <Link to="/" className="back-button" aria-label="Back to Homepage">
+          <img src="/icons/back.svg" alt="logo" className="h-4 w-4 sm:w-2.5 sm:h-2.5" />
+          <span className="text-gray-800 text-sm font-semibold hidden sm:block">Back to Homepage</span>
         </Link>
+        <h2 className="text-4xl !text-black font-bold flex-1 text-center">Resume Review</h2>
       </nav>
       <div className="flex flex-row w-full max-lg:flex-col-reverse">
         <section className="feedback-section bg-[url('/images/bg-small.svg') bg-cover h-[100vh] sticky top-0 items-center justify-center">
@@ -83,7 +84,6 @@ const Resume = () => {
           )}
         </section>
         <section className="feedback-section">
-          <h2 className="text-4xl !text-black font-bold">Resume Review</h2>
           {feedback ? (
             <div className="flex flex-col gap-8 animate-in fade-in duration-1000">
               <Summary feedback={feedback} />
