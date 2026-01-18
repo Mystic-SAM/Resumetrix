@@ -49,3 +49,12 @@ interface Feedback {
         }[];
     };
 }
+
+type ModalButtonType = "negative" | "positive" | "neutral";
+
+interface ModalAction {
+    buttonText: string;
+    buttonType: ModalButtonType;
+    onClick: () => void;
+    classNames?: string;
+};
