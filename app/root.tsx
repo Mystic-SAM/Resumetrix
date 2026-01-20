@@ -5,6 +5,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useNavigate,
 } from "react-router";
 
 import { useEffect } from "react";
@@ -57,6 +58,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   let message = "Oops!";
   let details = "An unexpected error occurred.";
   let stack: string | undefined;
+  const navigate = useNavigate();
 
   if (isRouteErrorResponse(error)) {
     message = error.status === 404 ? "404" : "Error";
@@ -69,15 +71,31 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
     stack = error.stack;
   }
 
+  const navigateHome = () => {
+    navigate("/");
+  }
+
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
-          <code>{stack}</code>
-        </pre>
-      )}
+    <main className="secondary-main bg-cover min-h-screen flex items-center justify-center">
+      <div className="gradient-border shadow-lg w-fit">
+        <section className="flex flex-col gap-8 bg-white rounded-2xl p-10">
+          <div className="flex flex-col items-center gap-2 text-center">
+            <h1>{message}</h1>
+            <p className="text-lg">{details}</p>
+          </div>
+          {stack && (
+            <pre className="w-full p-4 overflow-x-auto">
+              <code>{stack}</code>
+            </pre>
+          )}
+
+          <div className="flex justify-center items-center">
+            <button className="primary-button h-10 w-fit" onClick={navigateHome}>
+              Go to Dashboard
+            </button>
+          </div>
+        </section>
+      </div>
     </main>
   );
 }

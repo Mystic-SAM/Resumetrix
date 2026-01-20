@@ -24,7 +24,7 @@ const Auth = () => {
   }
 
   return (
-    <main className="auth-page bg-cover min-h-screen flex items-center justify-center">
+    <main className="secondary-main bg-cover min-h-screen flex items-center justify-center">
       <div className="gradient-border shadow-lg w-fit">
         <section className="flex flex-col gap-8 bg-white rounded-2xl p-10">
           <div className="flex flex-col items-center gap-2 text-center">
@@ -32,7 +32,7 @@ const Auth = () => {
             {!isLoading && auth.isAuthenticated ?
               <>
                 <h2>You are already logged in.</h2>
-                <h2> Click on Home button to Continue Your Job Journey</h2>
+                <h2> Click on Dashboard button to Continue Your Job Journey</h2>
               </>
               : <h2>Log In to Continue Your Job Journey</h2>
             }
@@ -47,7 +47,7 @@ const Auth = () => {
                 {auth.isAuthenticated ? (
                   <>
                     <button className="auth-button" onClick={navigateHome}>
-                      <p>Home</p>
+                      <p>Dashboard</p>
                     </button>
                     <button className="auth-button" onClick={auth.signOut}>
                       <p>Log Out</p>

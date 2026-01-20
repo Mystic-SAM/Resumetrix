@@ -30,30 +30,38 @@ const Resume = () => {
   }, [isLoading, auth.isAuthenticated]);
 
   const loadResume = async () => {
-    const resume = await kv.get(`resume:${id}`);
+    try {
+      const resume = await kv.get(`resume:${id}`);
 
-    if (!resume) return;
+      if (!resume) throw new Error("Resume Not Found!");
 
-    const data = JSON.parse(resume);
+      const data = JSON.parse(resume);
 
-    const resumeBlob = await fs.read(data.resumePath);
-    if (!resumeBlob) return;
+      const resumeBlob = await fs.read(data.resumePath);
+      if (!resumeBlob) throw new Error("Resume Not Found!");
 
-    const pdfBlob = new Blob([resumeBlob], { type: 'application/pdf' });
-    const resumeUrl = URL.createObjectURL(pdfBlob);
-    setResumeUrl(resumeUrl);
+      const pdfBlob = new Blob([resumeBlob], { type: 'application/pdf' });
+      const resumeUrl = URL.createObjectURL(pdfBlob);
+      setResumeUrl(resumeUrl);
 
-    if (imageUrlMap[data.imagePath]) {
-      setResumeImgUrl(imageUrlMap[data.imagePath]);
-    } else {
-      const imageBlob = await fs.read(data.imagePath);
-      if (!imageBlob) return;
-      const resImgUrl = URL.createObjectURL(imageBlob);
-      setResumeImgUrl(resImgUrl);
-      setImageUrl(data.imagePath, resImgUrl);
+      if (imageUrlMap[data.imagePath]) {
+        setResumeImgUrl(imageUrlMap[data.imagePath]);
+      } else {
+        const imageBlob = await fs.read(data.imagePath);
+        if (!imageBlob) throw new Error("Resume Not Found!");
+        const resImgUrl = URL.createObjectURL(imageBlob);
+        setResumeImgUrl(resImgUrl);
+        setImageUrl(data.imagePath, resImgUrl);
+      }
+
+      setFeedback(data.feedback);
+    } catch (err: any) {
+      console.log({ err });
+      navigate('/error', {
+        state: { errorMsg: err.message },
+        replace: true
+      });
     }
-
-    setFeedback(data.feedback);
   }
 
   useEffect(() => {
@@ -65,7 +73,7 @@ const Resume = () => {
       <nav className="resume-nav">
         <Link to="/" className="back-button" aria-label="Back to Homepage">
           <img src="/icons/back.svg" alt="logo" className="h-4 w-4 sm:w-2.5 sm:h-2.5" />
-          <span className="text-gray-800 text-sm font-semibold hidden sm:block">Back to Homepage</span>
+          <span className="text-gray-800 text-sm font-semibold hidden sm:block">Back to Dashboard</span>
         </Link>
         <h2 className="text-4xl !text-black font-bold flex-1 text-center">Resume Review</h2>
       </nav>

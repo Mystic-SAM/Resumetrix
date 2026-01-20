@@ -11,6 +11,7 @@ const ResumeCard = ({ resume }: { resume: Resume }) => {
   const { deleteResume, imageUrlMap, setImageUrl, revokeImageUrl } = useResumeStore();
   const [resumeImgUrl, setResumeImgUrl] = useState('');
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isImgLoaded, setImgLoaded] = useState(false);
 
   useEffect(() => {
     // If image is already cached, use it immediately
@@ -115,17 +116,22 @@ const ResumeCard = ({ resume }: { resume: Resume }) => {
             </button>
           </div>
         </div>
-        {resumeImgUrl && (
-          <div className="gradient-border animate-in fade-in duration-1000">
-            <div className=" w-full h-full">
+        <div className="gradient-border animate-in fade-in duration-1000">
+          <div className=" w-full h-full">
+            {(!isImgLoaded && !resumeImgUrl) ? (
+              <div className="animate-pulse bg-slate-200 rounded h-[350px] max-sm:h-[280px]" />
+            ) : (
               <img
                 src={resumeImgUrl}
                 alt="resume"
                 className="w-full h-[350px] max-sm:h-[280px] object-cover object-top"
+                onLoad={() => setImgLoaded(true)}
+                onError={() => setImgLoaded(true)}
+                ref={img => { (img && img.complete) && setImgLoaded(true) }}
               />
-            </div>
+            )}
           </div>
-        )}
+        </div>
       </Link>
       <ConfirmModal
         isOpen={isModalOpen}

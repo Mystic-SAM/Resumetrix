@@ -21,7 +21,12 @@ const Navbar = () => {
           <p className="text-2xl font-bold text-gradient">RESUMETRIX</p>
         </Link>
       </nav>
-      <nav aria-label="Primary Navigation" className={cn("flex gap-2 mt-1 py-2 px-3 xs:px-5 bg-white", { "justify-end": !isUploadPage, "justify-between": isUploadPage })} >
+      <nav aria-label="Primary Navigation"
+        className={cn("flex gap-2 mt-1 py-2 px-3 xs:px-5 bg-white", {
+          "justify-end": !isUploadPage,
+          "justify-between": isUploadPage
+        }
+        )} >
         {
           isUploadPage ? (
             <h3 className="text-xl text-gradient font-bold self-center"> Upload your Resume</h3>

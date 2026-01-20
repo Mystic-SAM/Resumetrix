@@ -52,7 +52,7 @@ main {
     background-image: url("/images/bg-main.svg");
   }
 
-  &.auth-page {
+  &.secondary-main {
     background-image: url("/images/bg-auth.svg");
   }
 }
