@@ -95,7 +95,7 @@ const ResumeCard = ({ resume }: { resume: Resume }) => {
               </h3>
             )}
           </div>
-          <div className="flex">
+          <div className="flex max-xs:relative max-xs:w-full max-xs:justify-center">
             <div className="flex-shrink-0">
               <ScoreCircle score={feedback.overallScore} />
             </div>
@@ -106,6 +106,7 @@ const ResumeCard = ({ resume }: { resume: Resume }) => {
                 bg-white
                 shadow-md
                 w-7 h-7
+                max-xs:absolute max-xs:top-[10px] max-xs:right-0
               "
               aria-label="Delete resume"
               title="Delete Resume"

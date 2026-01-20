@@ -45,7 +45,7 @@ body {
 }
 
 main {
-  @apply min-h-screen pt-10;
+  @apply min-h-screen pt-5;
   @apply bg-cover;
 
   &.main-page {
@@ -68,6 +68,7 @@ h2 {
 label {
   @apply text-dark-200;
 }
+
 input {
   @apply w-full p-4 inset-shadow rounded-2xl focus:outline-none bg-white;
 }
@@ -96,7 +97,7 @@ form {
   }
 
   .navbar {
-    @apply flex flex-row justify-between items-center bg-white rounded-full p-4 w-full px-10 max-w-[1200px] mx-auto;
+    @apply flex flex-row justify-between items-center rounded-full py-2 xs:py-3 w-full max-w-[1200px] mx-auto px-4 xs:px-5 sm:px-6 md:px-10 max-xs:justify-center bg-white/25 backdrop-blur-2xl backdrop-saturate-150 border border-white/30 shadow-xl;
   }
 
   .main-section {
@@ -108,7 +109,7 @@ form {
   }
 
   .resumes-section {
-    @apply flex flex-wrap max-lg:flex-col gap-6 items-start  w-full max-w-[1850px] justify-evenly;
+    @apply flex flex-wrap max-lg:flex-col gap-6 items-start w-full max-w-[1850px] justify-evenly;
   }
 
   .resume-card {
@@ -145,6 +146,7 @@ form {
 
   .resume-summary {
     @apply flex flex-row items-center justify-center p-4 gap-4;
+
     .category {
       @apply flex flex-row gap-2 items-center bg-gray-50 rounded-2xl p-4 w-full justify-between;
     }
@@ -155,6 +157,7 @@ form {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
