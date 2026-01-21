@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { AI_MODEL } from "~/constants";
 
 declare global {
   interface Window {
@@ -95,8 +96,6 @@ interface PuterStore {
   init: () => void;
   clearError: () => void;
 }
-
-const AI_MODEL: string = "anthropic/claude-opus-4-5";
 
 const getPuter = (): typeof window.puter | null =>
   typeof window !== "undefined" && window.puter ? window.puter : null;

@@ -1,3 +1,5 @@
+export const AI_MODEL: string = "anthropic/claude-opus-4-5";
+
 export const AIResponseFormat = `
     interface Feedback {
     overallScore: number; //max 100
